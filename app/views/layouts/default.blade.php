@@ -16,11 +16,13 @@
 		<!-- Optional theme -->
 		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"> -->
 		<link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
-
+		
+		<link rel="stylesheet" href="{{asset('css/own.css')}}"> <!-- toegevoegd -->
+		
 		<style>
 		@section('styles')
 			body {
-				padding-top: 60px;
+				padding-top: 90px;f <!-- gewijzigd van 60px -->
 			}
 		@show
 		</style>
@@ -37,35 +39,53 @@
 		
 
 		<!-- Navbar -->
-		<div class="navbar navbar-inverse navbar-fixed-top">
-	      <div class="container">
-	        <div class="navbar-header">
-	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	          </button>
-	          <a class="navbar-brand" href="{{ URL::route('home') }}">{{trans('pages.name')}}</a>
-	        </div>
-	        <div class="collapse navbar-collapse">
-	          <ul class="nav navbar-nav">
-				@if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
-					<li {{ (Request::is('users*') ? 'class="active"' : '') }}><a href="{{ URL::to('/users') }}">{{trans('pages.users')}}</a></li>
-					<li {{ (Request::is('groups*') ? 'class="active"' : '') }}><a href="{{ URL::to('/groups') }}">{{trans('pages.groups')}}</a></li>
-				@endif
-	          </ul>
-	          <ul class="nav navbar-nav navbar-right">
-	            @if (Sentry::check())
-				<li {{ (Request::is('users/show/' . Session::get('userId')) ? 'class="active"' : '') }}><a href="{{ URL::to('users') }}/{{ Session::get('userId') }}">{{ Session::get('email') }}</a></li>
-				<li><a href="{{ URL::to('logout') }}">{{trans('pages.logout')}}</a></li>
-				@else
-				<li {{ (Request::is('login') ? 'class="active"' : '') }}><a href="{{ URL::to('login') }}">{{trans('pages.login')}}</a></li>
+
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<ul class="nav navbar-nav">
+				<li class="active">
+					<a href="{{ URL::route('home') }}" style='margin:0;padding:0'>
+						{{HTML::image('img/logowvtv.jpg','alt logo', array('width' => '60px', 'vertical-align' => 'text-top') )}}
+						<span style='line-height: 60px; text-align:center; color : red;	font-size : 1.6em;'>WVTV</span>
+					</a>					
+				</li>
+				<li class='menu'>
+					<a class='titel' href="{{ URL::to('/inhoud') }}">{{trans('default.inhoud')}}</a>
+				</li>
+				<li class='menu'>
+					<a class='titel' href="{{URL::to('/statuten') }}">{{trans('default.statuten') }}</a>
+				</li>
+				<li class='menu'>
+					<a class='titel' href="{{URL::to('/contact') }}">{{trans('default.contact') }}</a>
+				</li>	
 				
+				@if (Sentry::check() && (Sentry::getUser()->hasAccess('admin') || Sentry::getUser()->hasAccess('secretary')))
+					<li class='menu'>
+						<a class='titel' href="{{ URL::to('/beheer') }}">{{trans('default.beheer')}}</a>
+					</li>
+				@endif			
+			</ul>
+			
+			<ul class='nav navbar-nav navbar-right'>
+				@if (Sentry::check())
+					<li {{ (Request::is('users/show/'.Session::get('userId')) ? 'class="active menu"' : 'class="menu"')}}>
+						<a href="/users/{{ Session::get('userId') }}">{{ Session::get('email') }}</a>
+					</li>
+					<li class='menu'>
+						<a href="{{ URL::to('logout') }}">{{trans('default.logout')}}</a>
+					</li>
+				@else
+					<li {{ (Request::is('login') ? 'class="active menu"' : 'class="menu"') }}>
+						<a href="{{ URL::to('login') }}">{{trans('default.login')}}</a>
+					</li>
+					<li {{ (Request::is('users/create') ? 'class="active menu"' : 'class="menu"') }}>
+						<a href="{{ URL::to('users/create') }}">{{trans('default.register')}}</a>
+					</li>
 				@endif
-	          </ul>
-	        </div><!--/.nav-collapse -->
-	      </div>
-	    </div>
+			</ul>
+		</div>
+	
+			<div class='titeltekst'>Wetenschappelijke Vereniging Transfusie Vlaanderen</div>
+		</nav>
 		<!-- ./ navbar -->
 
 		<!-- Container -->
