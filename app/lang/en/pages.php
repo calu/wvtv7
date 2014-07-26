@@ -64,7 +64,7 @@ return array(
 
 	'actiondelete'	=> "Delete",
 
-	''	=> "",
+	'disclaimer'	=> "Disclaimer",
 
 	''	=> "",
 

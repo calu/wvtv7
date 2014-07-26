@@ -98,6 +98,13 @@
 			@yield('content')
 			<!-- ./ content -->
 		</div>
+		
+		<div class="container">
+			<div class='col-md-offset-8 col-md-4'>
+				Copyright &copy; {{ date('Y') }} by JC.<br/>
+		        All Rights Reserved.<br/>
+			</div>			
+		</div>
 
 		<!-- ./ container -->
 
