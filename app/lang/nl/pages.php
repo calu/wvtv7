@@ -68,7 +68,7 @@ return array(
 
 	'disclaimer'	=> "Disclaimer",
 
-	''	=> "",
+	'title'	=> "WVTV",
 
 	''	=> "",
 
