@@ -63,6 +63,9 @@ Route::get('disclaimer', array('as' => 'disclaimer', function()
 	return View::make('disclaimer');
 }));
 
+// Routes uit de menubalk
+Route::get('inhoud', function(){ return View::make('contents/index'); });
+
 
 
 
