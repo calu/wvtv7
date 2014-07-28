@@ -65,7 +65,11 @@ Route::get('disclaimer', array('as' => 'disclaimer', function()
 
 // Routes uit de menubalk
 Route::get('inhoud', function(){ return View::make('contents/index'); });
+Route::get('beheer', function(){ return View::make('beheers/index'); });
 
+// Routes voor het beheer onderdeel
+Route::get('beheer/init', 'BeheersController@init');
+Route::get('beheer/checkmail', 'BeheersController@checkmail');
 
 
 
