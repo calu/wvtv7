@@ -64,7 +64,7 @@ return array(
 
 	'actiondelete'	=> "Wis",
 
-	'thankyou'	=> "dank je",
+	'thankyou'	=> "dank u",
 
 	'disclaimer'	=> "Disclaimer",
 
