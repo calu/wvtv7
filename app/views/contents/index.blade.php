@@ -34,7 +34,7 @@
 			</div>
 			<div class='panel-body'>
 				@if (Sentry::check())
-					@include('contents.profiel')
+					@include('contents.widget', array('rubriek' => 'profiel'))
 				@else
 					als je aangemeld bent kan je hier je profiel en wachtwoord wijzigen
 				@endif
