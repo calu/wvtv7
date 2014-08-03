@@ -20,7 +20,7 @@ class CreateUserExtraTable extends Migration {
 		  $table->date('birthdate')->nullable();
 		  $table->string('street')->nullable();
 		  $table->string('housenr',10)->nullable();
-		  $table->string('box',10)->nullable();
+		  $table->string('city',10)->nullable();
 		  $table->string('zip',10)->nullable();
 		  $table->string('country',20)->nullable();
 		  $table->string('phone',20)->nullable();

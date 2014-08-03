@@ -48,5 +48,16 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements UserInterfac
 	{
 		return $this->email;
 	}
+	
+	/*
+	 * Toegevoegd door Johan Calu om een één-op-één relatie aan te
+	 * geven met de bestuurstabel
+	 * 
+	 * bestuur
+	 * 
+	 */
+	public function bestuur(){
+		return $this->hasOne('Bestuur');
+	}	
 
 }

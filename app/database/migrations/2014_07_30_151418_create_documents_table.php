@@ -23,7 +23,7 @@ class CreateDocumentsTable extends Migration {
 			$table->string('localfilename');
 			$table->string('author');
 			$table->boolean('alwaysvisible');
-			$table->enum('type', 'document','wetgeving','transfusie','links','navorming');
+			$table->enum('type', array('document','wetgeving','transfusie','links','navorming'));
 			$table->timestamps();
 		});
 	}
