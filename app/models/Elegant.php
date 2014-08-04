@@ -37,5 +37,6 @@ class Elegant extends Eloquent
         return $this->errors;
     }
 	
+	
 }
 ?>

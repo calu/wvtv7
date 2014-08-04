@@ -77,4 +77,6 @@ Route::resource('bestuurs', 'BestuursController');
 // Routes voor Documenten
 Route::resource('documents', 'DocumentsController');
 
+Route::get('volledigelijst/{rubriek}', function($rubriek){ return View::make('contents/volledigelijst')->with('rubriek', $rubriek);});
+
 

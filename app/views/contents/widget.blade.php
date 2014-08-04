@@ -11,12 +11,16 @@ $lijst = AppHelper::getShortlist($rubriek);
 		@if (!$lijst)
 			<li>Nog geen data</li>
 		@else
-			<li>TODO #8 geef hier de shortlist </li>
+		   @foreach($lijst AS $item)
+		   		<li> {{ $item }} </li>
+		   @endforeach	
 		@endif
 	</ul>
 	<div style='clear:both'>
 		{{-- link toon de volledige lijst --}}
-		{{-- TODO #9 @include('contents.volledigelijst')->with('rubriek' => $rubriek) --}}
+
+		<?php $url = url('volledigelijst',$parameters = array('rubriek' => $rubriek)); ?>
+		<a href='{{ $url }}' class='groen'>toon de volledige lijst</a>
 	</div>
 </div>
 
