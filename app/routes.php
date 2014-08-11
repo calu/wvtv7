@@ -79,4 +79,10 @@ Route::resource('documents', 'DocumentsController');
 
 Route::get('volledigelijst/{rubriek}', function($rubriek){ return View::make('contents/volledigelijst')->with('rubriek', $rubriek);});
 
+Route::get('arrow/{id}/{rubriek}/{direction}', function($id, $rubriek,$direction){
+	AppHelper::moveItem($id, $rubriek, $direction);
+	return View::make('contents/volledigelijst')->with('rubriek', $rubriek);
+//	 print("id = {$id} en rubriek = {$rubriek} en direction = {$direction}");
+});
+
 

@@ -24,11 +24,12 @@ class Bestuur extends Elegant {
 		foreach($bestuur AS $item)
 		{
 			$temp = null;
-			if ($admin) $temp[] = "adm";
+			$id = $item->user->id;
+			if ($admin) $temp[] = array('id' => $id, "functie" => 'updown');
 			$temp[] = $item->user->first_name;
 			$temp[] = $item->user->last_name;
 			if ($loggedon){
-				$id = $item->user->id;
+				
 				$extraArray = UserExtra::where('user_id','=',$id)->get();
 				$extra = $extraArray[0];
 				$temp[] = $extra->phone;

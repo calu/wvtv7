@@ -62,7 +62,19 @@
 			@foreach($body AS $element)
 			<tr>
 				@foreach($element AS $item)
-					<td>{{$item}}</td>
+					@if (is_array($item) && $item['functie'] == "updown")
+						<td>
+							<?php  
+							// Hier maak je de beide url's aan - en zorg ervoor dat ook de id en de rubriek meegegeven worden 
+							$urlup = url('arrow', $parameters = array('id' => $item['id'], 'rubriek' => $rubriek, 'direction' => 'up'));
+							$urldown = url('arrow', $parameters = array('id' => $item['id'], 'rubriek' => $rubriek, 'direction' => 'down'));
+							?>
+							<a href="{{ $urlup }}" rel="tooltip">{{HTML::image('img/up.png') }}</a>
+							<a href="{{ $urldown }}" rel="tooltip">{{HTML::image('img/down.png') }}</a>
+						</td>
+					@else
+						<td>{{$item}}</td>
+					@endif
 				@endforeach
 			</tr>
 			@endforeach
