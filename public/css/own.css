@@ -52,3 +52,9 @@ li.menu{
 .groen{
 	color : green;
 }
+
+
+/**** Form correcties ****/
+.noformfield{
+	padding-top: 0.5em;
+}

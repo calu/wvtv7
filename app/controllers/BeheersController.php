@@ -57,6 +57,7 @@ class BeheersController extends \BaseController {
 	public function edit($id)
 	{
 		//
+		print("edit - BeheersController en id = {$id}");die("xxx");
 	}
 
 	/**

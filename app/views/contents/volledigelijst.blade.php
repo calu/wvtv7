@@ -61,8 +61,9 @@
 		<tbody>
 			@foreach($body AS $element)
 			<tr>
-				@foreach($element AS $item)
-					@if (is_array($item) && $item['functie'] == "updown")
+				@foreach($element AS $item)				
+					@if (is_array($item))
+						@if ($item['functie'] == "updown")
 						<td>
 							<?php  
 							// Hier maak je de beide url's aan - en zorg ervoor dat ook de id en de rubriek meegegeven worden 
@@ -72,6 +73,17 @@
 							<a href="{{ $urlup }}" rel="tooltip">{{HTML::image('img/up.png') }}</a>
 							<a href="{{ $urldown }}" rel="tooltip">{{HTML::image('img/down.png') }}</a>
 						</td>
+						@endif
+						@if ($item['functie'] == "adm")
+						<?php
+						$urledit = url('edit', $parameters= array('id' => $item['id'], 'rubriek' => $rubriek));
+						$urldelete = url('delete', $parameters = array('id'=>$item['id'], 'rubriek' => $rubriek));
+						?>
+						  <td>
+						  	<a href="{{ $urledit }}" rel="tooltip"><span class="glyphicon glyphicon-pencil"></span></a>
+						  	<a href="{{ $urldelete }}" rel="tooltip"><span class="glyphicon glyphicon-trash"></span></a> 
+						  </td>
+						@endif
 					@else
 						<td>{{$item}}</td>
 					@endif

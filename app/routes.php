@@ -71,8 +71,10 @@ Route::get('beheer', function(){ return View::make('beheers/index'); });
 Route::get('beheer/init', 'BeheersController@init');
 Route::get('beheer/checkmail', 'BeheersController@checkmail');
 
+
 // Routes voor Bestuur
 Route::resource('bestuurs', 'BestuursController');
+Route::get('bestuurs/edit/{id}', array('as' => 'bestuurs.edit', 'uses' => 'BestuursController@edit'));
 
 // Routes voor Documenten
 Route::resource('documents', 'DocumentsController');
@@ -84,5 +86,24 @@ Route::get('arrow/{id}/{rubriek}/{direction}', function($id, $rubriek,$direction
 	return View::make('contents/volledigelijst')->with('rubriek', $rubriek);
 //	 print("id = {$id} en rubriek = {$rubriek} en direction = {$direction}");
 });
+
+Route::get('edit/{id}/{rubriek}', function($id, $rubriek){
+	switch ($rubriek)
+	{
+		case "bestuur" :
+			// id is de id van de user, niet van bestuur --> dus hier zoeken we de user_id
+			$bestuur = DB::table('bestuurs')->where('user_id', $id)->get();			
+			return Redirect::route('bestuurs.edit', array($bestuur[0]->id));
+			break;
+		default :
+			die("Routes.php - edit - niet ingevuld voor {$rubriek}");
+	}
+
+});
+
+
+
+Route::get('delete/{id}/{rubriek}', function($id, $rubriek){ die("delete dit id = {$id} en rubriek = {$rubriek}"); });
+
 
 

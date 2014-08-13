@@ -7,8 +7,12 @@ class Bestuur extends Elegant {
 	   'title' => 'required'
 	];
 */
+	public static $rules = array(
+		'id' => 'required',
+	);
+
 	// Don't forget to fill this array
-//	protected $fillable = [];
+	protected $fillable = array('bestuursfunctie');
 
 	public function user(){
 		return $this->belongsTo('User');
@@ -36,10 +40,18 @@ class Bestuur extends Elegant {
 				$temp[] = $extra->gsm;
 				$temp[] = $item->user->email;
 			}
-			if ($admin) $temp[] = "adm";
+			$temp[] = $item->bestuursfunctie;
+			if ($admin) $temp[] = array('id' => $id, "functie" => 'adm');
 			$ret[] = $temp;
 		}
 		return $ret;	
+	}
+	
+	public static function getFullname($user_id)
+	{
+		$user = User::find($user_id);
+		$naam = $user->first_name." ".$user->last_name;
+		return $naam;
 	}
 		
 }

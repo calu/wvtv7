@@ -87,8 +87,8 @@ class BestuursController extends \BaseController {
 		}
 
 		$bestuur->update($data);
-
-		return Redirect::route('bestuurs.index');
+		
+		return Redirect::to('/volledigelijst/bestuur');
 	}
 
 	/**

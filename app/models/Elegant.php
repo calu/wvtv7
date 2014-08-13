@@ -4,8 +4,9 @@ use Illuminate\Validation;
 
 class Elegant extends Eloquent
 {
-    protected $rules = array();
-
+/*    public $rules = array(
+	);
+*/
     protected $errors;
 	
 	protected $berichten = array(
