@@ -25,6 +25,7 @@ Edit Bestuur
         		{{ $naam }}
         	</div>
         </div>
+        
         <div class="form-group {{ ($errors->has('bestuursfunctie')) ? 'has-error' : '' }}" for="bestuursfunctie">
 
             {{ Form::label('edit_bestuursfunctie', trans('bestuur.bestuursfunctie'), array('class' => 'col-sm-2 control-label')) }}

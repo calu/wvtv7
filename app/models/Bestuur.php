@@ -8,7 +8,7 @@ class Bestuur extends Elegant {
 	];
 */
 	public static $rules = array(
-		'id' => 'required',
+		'user_id' => 'required',
 	);
 
 	// Don't forget to fill this array
@@ -52,6 +52,33 @@ class Bestuur extends Elegant {
 		$user = User::find($user_id);
 		$naam = $user->first_name." ".$user->last_name;
 		return $naam;
+	}
+	
+	public static function getPotentialusers()
+	{
+		// We selecteren hier alle users, behalve deze die reeds in bestuur zitten en ook niet webbeheerder (3 eerste)
+		// eerst zoeken we alle bestuurders
+		$bestuurders = Bestuur::all();
+		$bestuur_id_rij = null;
+		foreach($bestuurders AS $bestuur)
+		{
+			$bestuur_id_rij[] = $bestuur->user_id;
+		}
+		
+		// nu halen we alle users op, met uitzondering van de eerste 3 (webbeheerder) en deze in bestuur
+		$users = User::all()->sortBy('last_name');
+		$ret[''] = 'Kies een lid';
+		foreach($users AS $user)
+		{
+			$id = $user->id;
+			if ($id>3 && !in_array($id, $bestuur_id_rij))
+			{
+				$temp = $user->first_name." ".$user->last_name;
+				$ret[$user->id] = $temp;
+			}
+		}
+//		var_dump($ret); die("tot hier");	
+		return $ret;
 	}
 		
 }

@@ -78,6 +78,16 @@ class AppHelper {
 
 		return;
 	}
+
+    public static function getRubriekpointer($rubriek)
+	{
+		switch ($rubriek)
+		{
+			case "bestuur" : $ret = 'bestuurs'; break;
+			default : die("AppHelper::getRubriekpointer : {rubriek } nog niet geïmplementeerd");
+		}
+		return $ret;
+	}
 }
 
 ?>

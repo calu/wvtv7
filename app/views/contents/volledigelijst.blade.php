@@ -49,6 +49,15 @@
 ?>	
 {{-- de tabel met de lijst --}}
 <div class='titeltekst'>{{ $rubriek }}</div>
+@if (Sentry::check() && (Sentry::getUser()->hasAccess('admin') || Sentry::getUser()->hasAccess('secretary')))
+<?php 
+$rubriekpointer = AppHelper::getRubriekpointer($rubriek); 
+$urlnieuw = url("{$rubriekpointer}/create"); 
+?>
+
+<div><a href="{{ $urlnieuw }}">Een nieuwe item toevoegen</a></div>
+@endif
+
 <div class='table-responsive'>
 	<table class='table table_bordered'>
 		<thead>

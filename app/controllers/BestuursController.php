@@ -31,6 +31,7 @@ class BestuursController extends \BaseController {
 	 */
 	public function store()
 	{
+
 		$validator = Validator::make($data = Input::all(), Bestuur::$rules);
 
 		if ($validator->fails())
@@ -38,9 +39,14 @@ class BestuursController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
 
-		Bestuur::create($data);
-
-		return Redirect::route('bestuurs.index');
+		$bestuur = new Bestuur();
+		$bestuur->user_id = $data['user_id'];
+		$bestuur->bestuursfunctie = $data['bestuursfunctie'];
+		$bestuur->sortnr = DB::table('bestuurs')->max('sortnr') + 1;
+		$bestuur->save();
+		return Redirect::to('/volledigelijst/bestuur');		
+//		Bestuur::create($data);
+//		return Redirect::route('bestuurs.index');
 	}
 
 	/**
@@ -100,8 +106,8 @@ class BestuursController extends \BaseController {
 	public function destroy($id)
 	{
 		Bestuur::destroy($id);
-
-		return Redirect::route('bestuurs.index');
+		return Redirect::to('/volledigelijst/bestuur');
+		//return Redirect::route('bestuurs.index');
 	}
 
 }
