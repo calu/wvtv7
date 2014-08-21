@@ -479,7 +479,90 @@ class UserController extends BaseController {
         }
 	}
 
+/***** zelf toegevoegd aan UserController ******/
+	public function changepassword($id)
+	{
+		return View::make('users.changepassword', array('id' => $id));
+	}
+	
+	public function storepassword()
+	{
+		$data = Input::all();
+		
+		// is het oude wachtwoord het goede?
+		// haal eerst het e-mail adres op
+		// en dan authenticate
+		$thisuser = DB::table('users')->where('id',$data['adminbeheer'])->first();
+		$email = $thisuser->email;
+		$s = null;
+		try
+		{
+			$credentials = array('email' => $email, 'password' => $data['oudww']);
+			$user = Sentry::authenticate($credentials, false);
+		}
+		
+		catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
+		{
+		    $s = 'je moet aangemeld zijn';
+		}
+		catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
+		{
+		    $s = 'Je moet een wachtwoord invullen';
+		}
+		catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
+		{
+		    $s = 'Het wachtwoord is verkeerd';
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+		    $s =  'verkeerde gebruiker!';
+		}
+		catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
+		{
+		    $s = 'De gebruiker werd (nog) niet geactiveerd';
+		}
+		// The following is only required if the throttling is enabled
+		catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
+		{
+		    $s = 'Deze gebruiker is geschorst';
+		}
+		catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
+		{
+		    $s = 'Deze gebruiker werd verbannen';
+		}		
 
+		
+	
+		// zo ja, zijn de strings ww1 en ww2 gelijk aan elkaar
+		$gelijk = null;
+		if ( $data['ww1'] != $data['ww2']) $gelijk = "De beide nieuwe wachtwoorden zijn niet gelijk";
+		
+		// ww1 moet minstens 6 karakters lang zijn
+		$kleiner = null;
+		if (strlen($data['ww1']) < 6) $kleiner = "het nieuwe wachtwoord moet minstens 6 karakters tellen!";
+		
+		!
+		
+//		var_dump($data);
+//		die("<UserController::storepassword");
+		
+		$errorrij = null;
+		if (isset($s)) $errorrij['oudww'] = $s;
+		if (isset($gelijk)) $errorrij['ww1'] = $gelijk;
+		if (isset($kleiner)) $erroraij['ww2'] = $kleiner;
+		
+		if ($errorrij)
+		{
+//			return Redirect::route('changepassword', array('id' => $data['adminbeheer']))->withErrors(array('oudww' => $s));
+			return Redirect::route('changepassword', array('id' => $data['adminbeheer']))->withErrors($errorrij);
+		} else {
+			// zo ja, dan is ww1 het nieuwe wachtwoord!!!
+			$user = Sentry::getUserProvider()->findById($data['adminbeheer']);
+			$user->password = $data['ww1'];
+			$user->save();
+			return Redirect::to('passwdsuccess');
+		}
+	}
 }
 
 	

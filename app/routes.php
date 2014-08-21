@@ -115,5 +115,8 @@ Route::get('delete/{id}/{rubriek}', function($id, $rubriek){
 	} 
 });
 
-
+/**** rubriek Profiel *****/
+Route::get('changepassword/{id}', array('as' => 'changepassword', 'uses' => 'UserController@changepassword'));
+Route::post('storepassword', array('as' => 'storepassword', 'uses' => 'UserController@storepassword'));
+Route::get('passwdsuccess', function(){ return View::make('users/passwdsuccess'); });
 

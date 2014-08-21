@@ -8,12 +8,21 @@ $lijst = AppHelper::getShortlist($rubriek);
 
 <div>
 	<ul class='shorttable'>
-		@if (!$lijst)
-			<li>Nog geen data</li>
+		@if ($rubriek == 'profiel')
+			<?php
+			$user = Sentry::getUser();
+			$url = url('changepassword', $parameters = array('id' => $user->id)); 
+			?>
+			<li><a href = "{{ $url }}">wijzig je wachtwoord</a></li>
+			<li>wijzig je profiel</li>
 		@else
-		   @foreach($lijst AS $item)
-		   		<li> {{ $item }} </li>
-		   @endforeach	
+			@if (!$lijst)
+				<li>Nog geen data</li>
+			@else
+			   @foreach($lijst AS $item)
+			   		<li> {{ $item }} </li>
+			   @endforeach	
+			@endif
 		@endif
 	</ul>
 	<div style='clear:both'>

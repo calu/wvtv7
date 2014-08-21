@@ -68,11 +68,11 @@ return array(
 
 	'title'	=> "WVTV",
 
-	''	=> "",
+	'oudww'	=> "oud wachtwoord",
 
-	''	=> "",
+	'ww1'	=> "nieuw wachtwoord",
 
-	''	=> "",
+	'ww2'	=> "herhaal wachtwoord",
 
 	''	=> "",
 

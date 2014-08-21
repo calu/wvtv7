@@ -70,13 +70,13 @@ return array(
 
 	'title'	=> "WVTV",
 
-	''	=> "",
+	'changepassword'	=> "Wijzig wachtwoord",
 
-	''	=> "",
+	'oudww'	=> "oud wachtwoord",
 
-	''	=> "",
+	'ww1'	=> "nieuw wachtwoord",
 
-	''	=> "",
+	'ww2'	=> "herhaal wachtwoord",
 
 	''	=> "",
 
