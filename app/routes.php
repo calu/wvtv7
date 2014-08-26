@@ -120,3 +120,58 @@ Route::get('changepassword/{id}', array('as' => 'changepassword', 'uses' => 'Use
 Route::post('storepassword', array('as' => 'storepassword', 'uses' => 'UserController@storepassword'));
 Route::get('passwdsuccess', function(){ return View::make('users/passwdsuccess'); });
 
+Route::get('changeprofile/{id}', array('as' => 'changeprofile', 'uses' => 'UserController@changeprofile'));
+Route::post('storeprofile', array('as' => 'storeprofile', 'uses' => 'UserController@storeprofile'));
+
+Route::post('changeprofile/changeprofilegroup', function(){
+	// haal groupname uit json
+	$data = Input::all();
+	if (Request::ajax())
+	{
+		$groupname = $data['groupname'];
+		$id = $data['ditid'];
+		
+		// We hebben nu de groupname en moeten deze nu gebruiken om in Sentry de group te switchen voor deze gebruiker
+		$user = Sentry::findUserById($id);
+		$group = Sentry::findGroupByName($groupname);
+		$usergroup = Sentry::findGroupByName("Users");
+		
+		// Er zijn 2 mogelijkheden : de gekozen groep was al geselecteerd of niet geselecteerd
+		if ($user->inGroup($group))
+		{  // de user zit al in deze groep -- we zullen deze groep dus verwijderen (als het niet de usergroep is)
+			if ( $groupname != 'Users')
+			{
+				// verwijder de user uit deze group
+				$user->removeGroup($group);
+				// en voeg hem toe aan de Users- group
+				$user->addGroup($usergroup);
+			} // anders .. de group is users, doe niets
+		} 
+		else {
+			// nu voeg je deze toe aan de group en verwijder die uit de andere groepen indien nodig
+			$user->addGroup($group);
+			
+			$groups = Sentry::findAllGroups();
+			foreach($groups AS $currentGroup)
+			{
+				if ($currentGroup != $group)
+				{
+					if ($user->inGroup($currentGroup))
+					{
+						$user->removeGroup($currentGroup);
+					}
+				}
+			}
+		}
+
+	}
+
+	return Response::json("{ 'result' => 'ok'}");
+});
+/*
+Route::filter('csrf', function() {
+    $token = Request::ajax() ? Request::header('X-CSRF-Token') : Input::get('_token');
+    if (Session::token() != $token)
+        throw new Illuminate\Session\TokenMismatchException;
+});
+*/

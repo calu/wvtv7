@@ -78,13 +78,13 @@ return array(
 
 	'ww2'	=> "herhaal wachtwoord",
 
-	''	=> "",
+	'id'	=> "gebruikersnummer",
 
-	''	=> "",
+	'email'	=> "e-mail",
 
-	''	=> "",
+	'first_name'	=> "voornaam",
 
-	''	=> "",
+	'last_name'	=> "familienaam",
 
 	''	=> "",
 

@@ -11,14 +11,15 @@
 
 		<!-- Bootstrap 3.0: Latest compiled and minified CSS -->
 		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> -->
-		<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+		{{-- <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"> --}}
 
 		<!-- Optional theme -->
 		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"> -->
-		<link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
+		{{-- <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}"> --}}
 		
-		<link rel="stylesheet" href="{{asset('css/own.css')}}"> <!-- toegevoegd -->
-		
+		{{-- <link rel="stylesheet" href="{{asset('css/own.css')}}"> --}} <!-- toegevoegd -->
+		{{ stylesheet_link_tag() }}
+		{{ javascript_include_tag() }}
 		<style>
 		@section('styles')
 			body {
@@ -32,7 +33,7 @@
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
-	
+		<!-- <meta name="_token" content="{{ csrf_token() }}"/> -->
 	</head>
 
 	<body>

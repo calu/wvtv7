@@ -540,12 +540,7 @@ class UserController extends BaseController {
 		// ww1 moet minstens 6 karakters lang zijn
 		$kleiner = null;
 		if (strlen($data['ww1']) < 6) $kleiner = "het nieuwe wachtwoord moet minstens 6 karakters tellen!";
-		
-		!
-		
-//		var_dump($data);
-//		die("<UserController::storepassword");
-		
+			
 		$errorrij = null;
 		if (isset($s)) $errorrij['oudww'] = $s;
 		if (isset($gelijk)) $errorrij['ww1'] = $gelijk;
@@ -553,7 +548,6 @@ class UserController extends BaseController {
 		
 		if ($errorrij)
 		{
-//			return Redirect::route('changepassword', array('id' => $data['adminbeheer']))->withErrors(array('oudww' => $s));
 			return Redirect::route('changepassword', array('id' => $data['adminbeheer']))->withErrors($errorrij);
 		} else {
 			// zo ja, dan is ww1 het nieuwe wachtwoord!!!
@@ -562,6 +556,45 @@ class UserController extends BaseController {
 			$user->save();
 			return Redirect::to('passwdsuccess');
 		}
+	}
+
+    public function changeprofile($id)
+	{
+		/*
+        $user = $this->user->byId($id);
+
+        if($user == null || !is_numeric($id))
+        {
+            // @codeCoverageIgnoreStart
+            return \App::abort(404);
+            // @codeCoverageIgnoreEnd
+        }
+
+        $currentGroups = $user->getGroups()->toArray();
+        $userGroups = array();
+        foreach ($currentGroups as $group) {
+        	array_push($userGroups, $group['name']);
+        }
+        $allGroups = $this->group->all();
+
+        return View::make('users.edit')->with('user', $user)->with('userGroups', $userGroups)->with('allGroups', $allGroups);
+		 */
+		 
+		$user = User::find($id);
+		if ($user == null || !is_numeric($id))
+		{
+			return \App::abort(404);
+		}
+
+        $currentGroups = $user->getGroups()->toArray();
+        $userGroups = array();
+        foreach ($currentGroups as $group) {
+        	array_push($userGroups, $group['name']);
+        }
+        $allGroups = $this->group->all();		
+		
+//		var_dump($user);die("tot hier"); 
+		return View::make('users.changeprofile', array('id' => $id))->with('user', $user)->with('userGroups', $userGroups)->with('allGroups', $allGroups);
 	}
 }
 

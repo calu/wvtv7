@@ -110,6 +110,7 @@ return array(
 		'Authority\Repo\RepoServiceProvider',
 		'Authority\Service\Form\FormServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
+		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 
 	),
 

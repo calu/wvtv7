@@ -12,9 +12,10 @@ $lijst = AppHelper::getShortlist($rubriek);
 			<?php
 			$user = Sentry::getUser();
 			$url = url('changepassword', $parameters = array('id' => $user->id)); 
+			$urlprofiel = url('changeprofile', $parameters = array('id' => $user->id));
 			?>
 			<li><a href = "{{ $url }}">wijzig je wachtwoord</a></li>
-			<li>wijzig je profiel</li>
+			<li><a href = "{{ $urlprofiel }}">wijzig je profiel</a></li>
 		@else
 			@if (!$lijst)
 				<li>Nog geen data</li>
