@@ -20,6 +20,22 @@
 		{{-- <link rel="stylesheet" href="{{asset('css/own.css')}}"> --}} <!-- toegevoegd -->
 		{{ stylesheet_link_tag() }}
 		{{ javascript_include_tag() }}
+
+		{{HTML::style('http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css')}}
+		{{HTML::script('http://code.jquery.com/jquery-1.9.1.js')}}
+		{{HTML::script('http://code.jquery.com/ui/1.10.4/jquery-ui.js')}}
+		
+		<script>
+		$(function() {
+			$( ".datepicker" ).datepicker({
+				changeMonth : true,
+				changeYear : true,
+				dateFormat : "dd-mm-yy",
+				yearRange: "1900:+0"
+				});
+			});
+		</script>
+  
 		<style>
 		@section('styles')
 			body {
@@ -111,9 +127,9 @@
 
 		<!-- Javascripts
 		================================================== -->
-		<script src="{{ asset('js/jquery-2.0.2.min.js') }}"></script>
+<?php /*		<script src="{{ asset('js/jquery-2.0.2.min.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('js/restfulizer.js') }}"></script> 
-		<!-- Thanks to Zizaco for the Restfulizer script.  http://zizaco.net  -->
+		<!-- Thanks to Zizaco for the Restfulizer script.  http://zizaco.net  --> */ ?>
 	</body>
 </html>

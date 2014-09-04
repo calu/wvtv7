@@ -88,6 +88,21 @@ class AppHelper {
 		}
 		return $ret;
 	}
+	
+	public static function enum_to_array($table, $field)
+	{
+		$result = DB::select("SHOW FIELDS FROM {$table} LIKE '{$field}'");
+		$resultvalue = $result[0]->Type;
+		preg_match('/enum\((.*)\)$/', $resultvalue, $matches);
+		$enum = array();
+		foreach( explode(',', $matches[1]) AS $value)
+		{
+			$v = trim( $value, "'");
+			$enum = array_add($enum, $v, $v);
+		}
+		return $enum;
+	}
+
 }
 
 ?>

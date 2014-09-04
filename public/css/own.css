@@ -53,6 +53,12 @@ li.menu{
 	color : green;
 }
 
+.grijstitel{
+	color : red;
+	text-align : center;
+	width : 100%;
+	
+}
 
 /**** Form correcties ****/
 .noformfield{

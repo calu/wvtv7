@@ -82,31 +82,30 @@ return array(
 
 	'last_name'	=> "familienaam",
 
+	'changeprofile'	=> "Wijzig je profiel",
+
+	'activated'	=> "actief",
+
+	'lastloggedin'	=> "laatste login",
+
+	'birthdate'	=> "geboortedatum",
+
+	'street'	=> "straat",
+
+	'housenr'	=> "nummer",
+
+	'zip'	=> "postcode",
+
+	'city'	=> "gemeente",
+
+	'country'	=> "land",
+
+	'phone'	=> "telefoon",
+
+	'gsm'	=> "gsm",
+	'workplace'	=> "werkplaats",
+	'function'	=> "positie",
+	'persontitle'	=> "titel",
 	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-	''	=> "",
-
-
+	''	=> "",	
 );
