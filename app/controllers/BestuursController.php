@@ -109,5 +109,6 @@ class BestuursController extends \BaseController {
 		return Redirect::to('/volledigelijst/bestuur');
 		//return Redirect::route('bestuurs.index');
 	}
+	
 
 }

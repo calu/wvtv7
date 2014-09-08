@@ -7,7 +7,11 @@
 function changeProfileGroup(dit, id)
 {
 	var thisbutton = dit.innerHTML;
-	
+	if (id == 1)
+	{
+		alert("Deze gebruiker mag niet gewijzigd worden");
+		return;
+	}
 	var data = { groupname : thisbutton, ditid : id };
 	
 	$.ajax({

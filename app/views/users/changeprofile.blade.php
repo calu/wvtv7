@@ -16,6 +16,8 @@ $gemachtigd = Sentry::check() && (Sentry::getUser()->hasAccess('admin') || Sentr
 $extra = DB::table('user_extras')->where('user_id', $adminbeheer)->first();
 
 $selectTitle = AppHelper::enum_to_array('user_extras', 'title');
+$selectCountry = DB::table('countries')->lists('name');
+
 ?>
 
 <div class="row">
@@ -46,33 +48,24 @@ $selectTitle = AppHelper::enum_to_array('user_extras', 'title');
             </div>
             
             <div class="grijstitel">Naam en adres</div>
-            
-            <div class='row'>
-            	<div class="form-group fullwidth">
-					<div class='col-sm-3'>
-			        	{{ Form::label('edit_title', trans('pages.persontitle'), array('class' => 'col-sm-1 control-label')) }}
-			        	<div class='col-sm-2'>
-			        		{{ Form::select('title', $selectTitle,$extra->title, array('class' => 'form-control', 'id' => 'edit_title')) }}		        		
-			        	</div>		        		
-          			</div>
-          			<div class='col-sm-5'>
-	            		{{ Form::label('edit-first_name', trans('pages.first_name'), array('class' => 'col-sm-3 control-label')) }}
-	            		<div class='col-sm-2'>
-	            		{{ Form::text('first_name', $user->first_name, array('class' => 'form-control', 'placeholder' => trans('pages.first_name'), 'id' => 'edit_first_name')) }}
-	            		</div>
-            		</div>
-          			<div class='col-sm-4'>
-	            		{{ Form::label('edit-last_name', trans('pages.last_name'), array('class' => 'col-sm-3 control-label')) }}
-	            		<div class='col-sm-2'>
-	            		{{ Form::text('last_name', $user->last_name, array('class' => 'form-control', 'placeholder' => trans('pages.last_name'), 'id' => 'edit_last_name')) }}
-	            		</div>
-            		</div>            		
-            	</div>
-            </div>
-
-
-            
             {{-- hier komt een test met own.css --}}
+           <div class='row'>
+           	 <div class='form-group fullwidth'>
+           	 	<div class='space-10'>&nbsp;</div>
+           	 	{{ Form::label('edit_title', trans('pages.persontitle'), array('class' => 'label-1 control-label')) }}
+           	 	<div class='space-20'>&nbsp;</div>
+           	 	{{ Form::select('title', $selectTitle,$extra->title, array('class' => 'mycol-100', 'id' => 'edit_title')) }}
+           	 	<div class='space-20'>&nbsp;</div>
+           	 	{{ Form::label('edit-first_name', trans('pages.first_name'), array('class' => 'label-60 control-label')) }}
+           	 	<div class='space-20'>&nbsp;</div>
+           	 	{{ Form::text('first_name', $user->first_name, array('class' => 'mycol-200', 'placeholder' => trans('pages.first_name'), 'id' => 'edit_first_name')) }}
+           	 	{{ ($errors->has('first_name') ? $errors->first('first_name') : '') }}
+           	 	<div class='space-20'>&nbsp;</div>
+           	 	{{ Form::label('edit-last_name', trans('pages.last_name'), array('class' => 'label-80 control-label')) }}
+           	 	<div class='space-20'>&nbsp;</div>
+           	 	{{ Form::text('last_name', $user->last_name, array('class' => 'mycol-200', 'placeholder' => trans('pages.last_name'), 'id' => 'edit_last_name')) }}
+           	 </div>
+           </div>
            <div class='clearfix'>&nbsp;</div>
            
            <div class='row'>
@@ -108,91 +101,89 @@ $selectTitle = AppHelper::enum_to_array('user_extras', 'title');
            	  	 <div class='space-20'>&nbsp;</div>
            	  	 {{ Form::label('edit_country', trans('pages.country'), array( 'class' => 'label-60 control-label')) }}
            	  	 <div class='space-20'>&nbsp;</div>
-           	  	 {{ Form::text('country', $extra->country, array('class' => 'mycol-200', 'placeholder' => trans('pages.country'), 'id' => 'edit_country')) }}
+           	  	 {{ Form::select('country', $selectCountry,$extra->country, array('class' => 'mycol-200','placeholder' => trans('pages.country'), 'id' => 'edit_country')) }}
            	  </div>
            </div>
-
-            
-            
-            
+           <div class="grijstitel">persoonlijke data</div>
+           
+           <div class='row'>
+              {{-- e-mail en geboortedatum --}}
+              <div class='space-10'>&nbsp;</div>
+              {{ Form::label('edit_email', trans('pages.email'), array('class' => 'label-60 control-label')) }}
+              <div class='space-20'>&nbsp;</div>
+              {{ Form::text('email', $user->email , array('class' => 'mycol-200', 'placeholder' => trans('pages.email'), 'id' => 'edit_email'))}}
+              {{ ($errors->has('email') ? $errors->first('email') : '') }}
+              <div class='space-20'>&nbsp;</div>
+              {{ Form::label('edit_birthdate', trans('pages.birthdate'), array('class' => 'label-90 control-label')) }}
+              <div class='space-20'>&nbsp;</div>
+              {{ Form::text('birthdate',$extra->birthdate, array('class' => 'mycol-200 datepicker', 'placeholder' => trans('pages.birthdate'),'data-datepicker' => 'datepicker', 'id' => 'edit_birthdate'))}}
+              {{ ($errors->has('birthdate') ? $errors->first('birthdate') : '') }}
+           </div>
+           <div class='clearfix'>&nbsp;</div>
+           <div class='row'>
+           	 {{-- telefoon en gsm --}}
+           	 <div class='space-10'>&nbsp;</div>
+           	 {{ Form::label('edit_phone', trans('pages.phone'), array( 'class' => 'label-60 control-label')) }}
+           	 <div class='space-20'>&nbsp;</div>
+           	 {{ Form::text('phone', $extra->phone, array('class' => 'mycol-200', 'placeholder' => trans('pages.phone'), 'id' => 'edit_phone')) }}
+           	 {{ ($errors->has('phone') ? $errors->first('phone') : '') }}
+           	 <div class='space-20'>&nbsp;</div>
+           	 {{ Form::label('edit_gsm', trans('pages.gsm'), array( 'class' => 'label-1 control-label')) }}
+           	 <div class='space-20'>&nbsp;</div>
+           	 {{ Form::text('gsm', $extra->gsm, array('class' => 'mycol-200', 'placeholder' => trans('pages.gsm'), 'id' => 'edit_gsm')) }}
+           	 {{ ($errors->has('gsm') ? $errors->first('gsm') : '') }}
+           </div>
+           
+           
             <div class='clearfix'>&nbsp;</div>
-            <div class='row'>
-            	{{-- zip city country --}}
-            	{{ Form::label('edit_zip', trans('pages.zip'), array( 'class' => 'col-sm-1 control-label')) }}
-            	<div class="col-xs-2">
-            		{{ Form::text('zip', $extra->zip, array('class' => 'col-sm-1', 'placeholder' => trans('pages.zip'), 'id' => 'edit_zip')) }}
-            	</div>
-            	{{ ($errors->has('zip') ? $errors->first('zip') : '') }}
-            	
-             	{{ Form::label('edit_city', trans('pages.city'), array( 'class' => 'col-sm-1 control-label')) }}
-            	<div class="col-xs-3">
-            		{{ Form::text('city', $extra->city, array( 'placeholder' => trans('pages.city'), 'id' => 'edit_city')) }}
-            	</div>
-            	{{ ($errors->has('city') ? $errors->first('city') : '') }}           	
-            	
-             	{{ Form::label('edit_country', trans('pages.country'), array( 'class' => 'col-sm-1 control-label')) }}
-            	<div class="col-xs-3">
-            		{{ Form::text('country', $extra->country, array( 'placeholder' => trans('pages.country'), 'id' => 'edit_country')) }}
-            	</div>
-            	{{ ($errors->has('country') ? $errors->first('country') : '') }} 
-           	
-            </div>
-                                  
-            <div class='row'>
-		        <div class="form-group fullwidth {{ ($errors->has('email')) ? 'has-error' : '' }}" for="email">
 
-					<div>
-			            {{ Form::label('edit_email', trans('pages.email'), array('class' => 'col-sm-1 control-label')) }}
-			            <div class="col-sm-6">
-			              {{ Form::text('email', $user->email , array('class' => 'form-control', 'placeholder' => trans('pages.email'), 'id' => 'edit_email'))}}
-			            </div>
-			            {{ ($errors->has('email') ? $errors->first('email') : '') }}   
-		            </div> 			
-		    	</div>            
-            </div>
-            
             <div class='row' style='color:green; width : 100%; text-align: center;'>
             	De passwoorden worden elders gewijzigd (zie home scherm)
             </div>
-            
-            <div class='row'>&nbsp;</div>
-            
-
-            <?php 
-            	if ($user->activated) $checked = 'checked'; else $checked = ''; 
-				if (Sentry::check() && (Sentry::getUser()->hasAccess('admin') || Sentry::getUser()->hasAccess('secretary'))) $disabled = ''; else $disabled = 'disabled';
-            ?>
+            <div class="grijstitel">professionele data</div>
+            <div class='row'>
+            	{{-- diploma functie --}}
+            	<div class='space-10'>&nbsp;</div>
+            	{{ Form::label('edit_diploma', trans('pages.diploma'), array( 'class' => 'label-60 control-label')) }}
+            	<div class='space-20'>&nbsp;</div>
+            	{{ Form::text('diploma', $extra->diploma, array('class' => 'mycol-200', 'placeholder' => trans('pages.diploma'), 'id' => 'edit_diploma')) }}
+            	{{ ($errors->has('diploma') ? $errors->first('diploma') : '') }}
+            	<div class='space-20'>&nbsp;</div>
+            	{{ Form::label('edit_diploma', trans('pages.diploma'), array( 'class' => 'label-60 control-label')) }}
+            	<div class='space-20'>&nbsp;</div>
+            	{{ Form::text('position', $extra->position, array('class' => 'mycol-200', 'placeholder' => trans('pages.position'), 'id' => 'edit_position')) }}
+            	{{ ($errors->has('position') ? $errors->first('position') : '') }}            	
+            </div>
+            <div class='clearfix'>&nbsp;</div>
+            {{-- werkplaats --}}
             
             <div class='row'>
-            	{{ Form::label('edit_activated', trans('pages.activated'), array('class' => 'col-sm-2 control-label') )}} &nbsp;
-            	<div class="col-sm-2">
-					<div class="onoffswitch">
-					    <input type="checkbox" name="activatedswitch" class="onoffswitch-checkbox" id="activated" {{ $checked }} {{ $disabled }}>
-					    <label class="onoffswitch-label" for="activated">
-					        <span class="onoffswitch-inner"></span>
-					        <span class="onoffswitch-switch"></span>
-					    </label>
-					</div>
-				</div>
-				
-				{{ Form::label('edit-lastloggedin', trans('pages.lastloggedin'), array('class' => 'col-sm-1 control-label')) }} &nbsp;
-				<div class="col-sm-2">
-					{{ Form::text('lastloggedin', $user->last_login, array('class' => 'form-control', 'placeholder' => '', 'id' => 'lastloggedin')) }}
-				</div>
+            	<div class='space-10'>&nbsp;</div>
+            	{{ Form::label('edit_workplace', trans('pages.workplace'), array( 'class' => 'label-60 control-label')) }}
+            	<div class='space-20'>&nbsp;</div>
+            	{{ Form::text('workplace', $extra->workplace, array('class' => 'mycol-600', 'placeholder' => trans('pages.workplace'), 'id' => 'edit_workplace')) }}
+            	{{ ($errors->has('workplace') ? $errors->first('workplace') : '') }}            	
             </div>
             
-            <?php
-            // Hier halen we de items uit userGroups en verwijderen de {} en stoppen die in activegroup
-            $specsymbol = array('{','}');
-            foreach($userGroups AS $u)
-			{
-				$temp = str_replace($specsymbol, '', $u);
-				$activeGroup[] = $temp;
-			}
+      {{--      @if (Sentry::check() && (Sentry::getUser()->hasAccess('admin') || Sentry::getUser()->hasAccess('secretary'))) --}}
+            
+            <?php // we halen alle mogelijke groepen op
+	            $specsymbol = array('{','}');
+	            foreach($userGroups AS $u)
+				{
+					$temp = str_replace($specsymbol, '', $u);
+					$activeGroup[] = $temp;
+				} 
+				
+				// als user activated is .... zet dan checked
+				if ($user->activated) $checked = 'checked'; else $checked = '';           	
             ?>
+            <div class="grijstitel">enkel voor beheerder</div>
+            {{-- de status --}}
             <div class='row'>
-            	{{ Form::label('edit-groups', trans('pages.groups'), array('class' => 'col-sm-1 control-label')) }} &nbsp;
-            	
+	            <div class='space-10'>&nbsp;</div>
+	            {{ Form::label('edit-groups', trans('pages.groups'), array('class' => 'label-60 control-label')) }}
+	            <div class='space-20'>&nbsp;</div>
             	@foreach($allGroups AS $group) 
             		@if ($gemachtigd)
             		<label >
@@ -203,63 +194,41 @@ $selectTitle = AppHelper::enum_to_array('user_extras', 'title');
             			<span id = "changeProfileGroup"  style="color:white;background-color: {{ (in_array($group->name, $activeGroup) ? 'red' : 'blue')}}">{{ $group->name}}</span>
             		</label>
             		@endif
-            	@endforeach				
+            	@endforeach	            	
+            </div>
+            <div class='clearfix'>&nbsp;</div>	
+            <div class='row'>
+            	{{-- geactiveerd en laatste login --}}
+            	<div class='space-10'>&nbsp;</div>
+            	{{ Form::label('edit_activated', trans('pages.activated'), array('class' => 'label-60 control-label') )}}
+            	<div class='space-20'>&nbsp;</div>
+            	<div class="onoffswitch">
+            		<input type="checkbox" name="activatedswitch" class="onoffswitch-checkbox" id="activated" {{ $checked }} />
+            		<label class="onoffswitch-label" for="activated">
+            			<span class="onoffswitch-inner"></span>
+            			<span class="onoffswitch-switch"></span>
+            		</label>     		
+            	</div>
+            	<div class='space-20'>&nbsp;</div>
+            	{{ Form::label('edit-lastloggedin', trans('pages.lastloggedin'), array('class' => 'label-120 control-label')) }}
+            	<div class='space-20'>&nbsp;</div>
+            	{{ Form::text('lastloggedin', $user->last_login, array('class' => 'mycol-200',  'placeholder' => '', 'disabled' => 'disabled', 'id' => 'lastloggedin')) }}
             </div>
             
-            
-            <div class='clearfix'>&nbsp;</div>
-
+            <div class='clearfix'>&nbsp;</div>	
             <div class='row'>
-	 	        <div class="form-group {{ ($errors->has('birthdate')) ? 'has-error' : '' }}" for="birthdate">
-		
-		            {{ Form::label('edit_birthdate', trans('pages.birthdate'), array('class' => 'col-sm-4 control-label')) }}
-		            
-					 		            
-		            <div class="col-sm-8">
-		              {{ Form::text('birthdate',$extra->birthdate, array('class' => 'form-control datepicker', 'placeholder' => trans('pages.birthdate'),'data-datepicker' => 'datepicker', 'id' => 'edit_birthdate'))}}
-		            </div>
-		            {{ ($errors->has('birthdate') ? $errors->first('birthdate') : '') }}    			
-		    	</div>           	
-            </div>
-            
- 
-            
-            <div class='clearfix'>&nbsp;</div>
-            <div class='row'>
-            	{{-- telefoon gsm --}}
-            	
-            	{{ Form::label('edit_phone', trans('pages.phone'), array( 'class' => 'col-sm-1 control-label')) }}
-            	<div class="col-xs-4">
-            		{{ Form::text('phone', $extra->phone, array('placeholder' => trans('pages.phone'), 'id' => 'edit_phone')) }}
-            	</div>
-            	{{ ($errors->has('phone') ? $errors->first('phone') : '') }}            	
-            	
-            	{{ Form::label('edit_gsm', trans('pages.gsm'), array( 'class' => 'col-sm-1 control-label')) }}
-            	<div class="col-xs-4">
-            		{{ Form::text('gsm', $extra->gsm, array('placeholder' => trans('pages.gsm'), 'id' => 'edit_gsm')) }}
-            	</div>
-            	{{ ($errors->has('gsm') ? $errors->first('gsm') : '') }}  
+            	{{-- in het bestuur --}}
+            	<?php
+            	if ( Bestuur::isMemberOfBestuur($adminbeheer)) $checked = 'ja'; else $checked = 'neen'; 
+				
+            	?>
+            	<div class='space-10'>&nbsp;</div>
+            	{{ Form::label('edit_inbeheer', trans('pages.inbeheer'), array('class' => 'label-120 control-label') )}}
+            	<div class='space-20'>&nbsp;</div>      
+            	{{ Form::text('inbeheer', $checked, array('class' => 'mycol-100',  'placeholder' => '', 'disabled' => 'disabled', 'id' => 'inbeheer')) }}     	
             </div>            
- 
-             <div class='clearfix'>&nbsp;</div>
-            <div class='row'>
-             	{{ Form::label('edit_workplace', trans('pages.workplace'), array( 'class' => 'col-sm-1 control-label')) }}
-            	<div class="col-xs-10">
-            		{{ Form::text('workplace', $extra->workplace, array('class'=> 'col-xs-10', 'placeholder' => trans('pages.workplace'), 'id' => 'edit_workplace')) }}
-            	</div>
-            	{{ ($errors->has('workplace') ? $errors->first('workplace') : '') }}            	
-            </div>
- 
-             <div class='clearfix'>&nbsp;</div>
-            <div class='row'>
-             	{{ Form::label('edit_function', trans('pages.function'), array( 'class' => 'col-sm-1 control-label')) }}
-            	<div class="col-xs-10">
-            		{{ Form::text('function', $extra->position, array('class'=> 'col-xs-10', 'placeholder' => trans('pages.function'), 'id' => 'edit_function')) }}
-            	</div>
-            	{{ ($errors->has('function') ? $errors->first('function') : '') }}            	
-            </div>                         
-
-			 
+            		            
+            {{-- @endif --}}
 			 
             {{ Form::submit('Spaar het profiel', array('class' => 'btn btn-primary')) }}
             

@@ -81,4 +81,15 @@ class Bestuur extends Elegant {
 		return $ret;
 	}
 		
+		/**
+	 * is the member with user_id == id in bestuur?
+	 * 
+	 * @param int $id (de user_id of the member)
+	 * @return true of false
+	 */
+	 public static function isMemberOfBestuur($id)
+	 {
+	 	$result = Bestuur::where('user_id', "$id")->count();
+		return $result == 1;
+	 }	
 }

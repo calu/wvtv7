@@ -560,25 +560,6 @@ class UserController extends BaseController {
 
     public function changeprofile($id)
 	{
-		/*
-        $user = $this->user->byId($id);
-
-        if($user == null || !is_numeric($id))
-        {
-            // @codeCoverageIgnoreStart
-            return \App::abort(404);
-            // @codeCoverageIgnoreEnd
-        }
-
-        $currentGroups = $user->getGroups()->toArray();
-        $userGroups = array();
-        foreach ($currentGroups as $group) {
-        	array_push($userGroups, $group['name']);
-        }
-        $allGroups = $this->group->all();
-
-        return View::make('users.edit')->with('user', $user)->with('userGroups', $userGroups)->with('allGroups', $allGroups);
-		 */
 		 
 		$user = User::find($id);
 		if ($user == null || !is_numeric($id))

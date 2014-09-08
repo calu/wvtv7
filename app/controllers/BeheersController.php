@@ -97,6 +97,67 @@ class BeheersController extends \BaseController {
 	 	// en je moet de eerste (calu) niet meer overzetten.  LET WEL : de nummering verandert, 
 	 	// omdat we reeds 3 accounts hebben aangemaakt.
 	 	
+	 	$date = new DateTime;
+		$extraID = DB::table('user_extras')->insertGetID(
+			array(
+			  'user_id' => 1,
+			  'birthdate' => "1951-09-06",
+			  'street' => "rozenlaan",
+			  'housenr' => "26",
+			  'city' => "Oostende",
+			  'zip' => "8400",
+			  'country' => "Belgium",
+			  'phone' => "059 123456",
+			  'gsm' => "0476 654321",
+			  'workplace' => "thuis",
+			  'position' => "the boss",
+			  'title' => "dr",
+			  'diploma' => "dr.",
+			  'created_at' => $date,
+			  'updated_at' => $date,
+			)
+		);
+
+		$extraID = DB::table('user_extras')->insertGetID(
+			array(
+			  'user_id' => 2,
+			  'birthdate' => "1951-09-06",
+			  'street' => "rozenlaan",
+			  'housenr' => "26",
+			  'city' => "Kortrijk",
+			  'zip' => "8500",
+			  'country' => "Belgium",
+			  'phone' => "059 123456",
+			  'gsm' => "0476 654321",
+			  'workplace' => "thuis",
+			  'position' => "the boss",
+			  'title' => "dr",
+			  'diploma' => "dr.",
+			  'created_at' => $date,
+			  'updated_at' => $date,
+			)
+		);
+		
+		$extraID = DB::table('user_extras')->insertGetID(
+			array(
+			  'user_id' => 3,
+			  'birthdate' => "1951-09-06",
+			  'street' => "rozenlaan",
+			  'housenr' => "26",
+			  'city' => "Brugge",
+			  'zip' => "8000",
+			  'country' => "Belgium",
+			  'phone' => "059 123456",
+			  'gsm' => "0476 654321",
+			  'workplace' => "thuis",
+			  'position' => "the boss",
+			  'title' => "dr",
+			  'diploma' => "dr.",
+			  'created_at' => $date,
+			  'updated_at' => $date,
+			)
+		);		
+	 	
 	 	$persons = DB::select("SELECT * FROM wvtv_person");
 		$bestuur = DB::select("SELECT * FROM wvtv_bestuur");
 		
@@ -127,7 +188,7 @@ class BeheersController extends \BaseController {
 					
 					// Vervolgens ook aanvullen in userExtra
 					$date = new DateTime;
-					$extraID = DB::table('userExtra')->insertGetID(
+					$extraID = DB::table('user_extras')->insertGetID(
 						array(
 							'user_id' => $thisUser->id,
 							'birthdate' => $person->birthdate,

@@ -106,6 +106,8 @@ return array(
 	'workplace'	=> "werkplaats",
 	'function'	=> "positie",
 	'persontitle'	=> "titel",
-	''	=> "",
-	''	=> "",	
+	'diploma'	=> "diploma",
+	'postion'	=> "functie",	
+	'workplace' => "werkplaats",
+	'inbeheer' => "is in beheer ?",	
 );

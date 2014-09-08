@@ -124,14 +124,16 @@ Route::get('changeprofile/{id}', array('as' => 'changeprofile', 'uses' => 'UserC
 Route::post('storeprofile', array('as' => 'storeprofile', 'uses' => 'UserController@storeprofile'));
 
 Route::post('changeprofile/changeprofilegroup', function(){
+	die("tot hier");
 	// haal groupname uit json
 	$data = Input::all();
 	if (Request::ajax())
 	{
 		$groupname = $data['groupname'];
 		$id = $data['ditid'];
-		
+		if ($id == 1) return Response::json("{ 'result' => 'een' }");
 		// We hebben nu de groupname en moeten deze nu gebruiken om in Sentry de group te switchen voor deze gebruiker
+		
 		$user = Sentry::findUserById($id);
 		$group = Sentry::findGroupByName($groupname);
 		$usergroup = Sentry::findGroupByName("Users");
