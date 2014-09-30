@@ -17,6 +17,7 @@ $extra = DB::table('user_extras')->where('user_id', $adminbeheer)->first();
 
 $selectTitle = AppHelper::enum_to_array('user_extras', 'title');
 $selectCountry = DB::table('countries')->lists('name');
+array_unshift($selectCountry, "--- kies een land ---");
 
 ?>
 
@@ -165,7 +166,7 @@ $selectCountry = DB::table('countries')->lists('name');
             	{{ ($errors->has('workplace') ? $errors->first('workplace') : '') }}            	
             </div>
             
-      {{--      @if (Sentry::check() && (Sentry::getUser()->hasAccess('admin') || Sentry::getUser()->hasAccess('secretary'))) --}}
+            @if (Sentry::check() && (Sentry::getUser()->hasAccess('admin') || Sentry::getUser()->hasAccess('secretary'))) 
             
             <?php // we halen alle mogelijke groepen op
 	            $specsymbol = array('{','}');
@@ -228,7 +229,7 @@ $selectCountry = DB::table('countries')->lists('name');
             	{{ Form::text('inbeheer', $checked, array('class' => 'mycol-100',  'placeholder' => '', 'disabled' => 'disabled', 'id' => 'inbeheer')) }}     	
             </div>            
             		            
-            {{-- @endif --}}
+            @endif 
 			 
             {{ Form::submit('Spaar het profiel', array('class' => 'btn btn-primary')) }}
             

@@ -14,6 +14,7 @@ class Elegant extends Eloquent
 		'date' => 'Het veld :attribute moet een exacte datum zijn',
 		'alpha' => 'Het veld :attribute mag enkel letters bevatten',
 		'uniek' => 'Deze gebruiker werd reeds ingeschreven',
+		'countrychosen' => 'Je moet een land kiezen',
 	);
 
     public function validate($data)

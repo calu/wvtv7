@@ -577,6 +577,87 @@ class UserController extends BaseController {
 //		var_dump($user);die("tot hier"); 
 		return View::make('users.changeprofile', array('id' => $id))->with('user', $user)->with('userGroups', $userGroups)->with('allGroups', $allGroups);
 	}
+	
+	public function storeprofile()
+	{
+		$data = Input::all();
+		$user = new User;
+		$result = $user->myValidate($data);
+		if (!$result)
+		{
+			$messages = $user->errors();
+			$temp = "<br />".implode("<br />", $messages->all());			
+			Session::flash('error', $temp);
+
+			$id = $data['adminbeheer'];
+			return Redirect::route('changeprofile',array($id))->withInput()->withErrors($user->errors());
+		}
+
+		// zoek de huidige user !!!
+		$userExtra = UserExtra::where('user_id', $data['adminbeheer'])->firstOrFail();
+		
+		$result = $userExtra->validate($data);
+		if (!$result)
+		{
+			$messages = $userExtra->errors();
+			$temp = "<br />".implode("<br />", $messages->all());			
+			Session::flash('error', $temp);
+			
+			$id = $data['adminbeheer'];
+			return Redirect::route('changeprofile',array($id))->withInput()->withErrors($user->errors());
+		}
+		
+		// Als we hier nu gewoon updaten, dan krijg je een foutmelding omdat de email unique moet zijn en
+		// deze is misschien niet gewijzigd en daarom als niet unique gezien. Dus eerst kijken of je e-mail gewijzigd is
+		$userdata = array(
+		   'first_name' => $data['first_name'],
+		   'last_name' => $data['last_name'],
+		);
+		
+		$user = User::find($data['adminbeheer']);
+		$emailchanged = $user->email != $data['email'];
+
+		if ($emailchanged)
+		{
+			$userdata['email'] = $data['email'];
+		} 
+		$success = $user->update($userdata);
+		if (!$success)
+		{
+			$messages = "Ik was niet in staat om je voornaam, familienaam of je e-mail te bewaren";
+			Session::flash('error', $messages);
+			
+			$id = $data['adminbeheer'];
+			return Redirect::route('changeprofile',array($id))->withInput();			
+		}
+		 
+		$userExtradata = array(
+			'title' => $data['title'],
+			'street' => $data['street'],
+			'housenr' => $data['housenr'],
+			'zip' => $data['zip'],
+			'city' => $data['city'],
+			'country' => $data['country'],
+			'birthdate' => $data['birthdate'],
+			'phone' => $data['phone'],
+			'gsm' => $data['gsm'],
+			'diploma' => $data['diploma'],
+			'position' => $data['position'],
+			'workplace' => $data['workplace'],
+		);
+		
+		$success = $userExtra->update($userExtradata);
+		if (!$success)
+		{
+			$messages = "Ik was niet in staat om je data te bewaren";
+			Session::flash('error', $messages);
+			
+			$id = $data['adminbeheer'];
+			return Redirect::route('changeprofile',array($id))->withInput();				
+		}
+		
+		return Redirect::route('inhoud');
+	}
 }
 
 	
