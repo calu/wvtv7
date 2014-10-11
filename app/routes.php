@@ -82,6 +82,7 @@ Route::resource('documents', 'DocumentsController');
 
 Route::get('volledigelijst/{rubriek}', function($rubriek){ return View::make('contents/volledigelijst')->with('rubriek', $rubriek);});
 
+
 Route::get('arrow/{id}/{rubriek}/{direction}', function($id, $rubriek,$direction){
 	AppHelper::moveItem($id, $rubriek, $direction);
 	return View::make('contents/volledigelijst')->with('rubriek', $rubriek);
@@ -171,6 +172,13 @@ Route::post('changeprofile/changeprofilegroup', function(){
 
 	return Response::json("{ 'result' => 'ok'}");
 });
+
+/*** document verwerking ****/
+
+Route::get('documentlijst/{rubriek}/{titel}', array('as' => 'documentlijst', 'uses' => 'DocumentsController@documentlijst'));
+
+Route::get('documents/create/{rubriek}/{titel}', array('as' => 'documents', 'uses' => 'DocumentsController@create'));
+
 /*
 Route::filter('csrf', function() {
     $token = Request::ajax() ? Request::header('X-CSRF-Token') : Input::get('_token');

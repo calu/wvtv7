@@ -20,8 +20,8 @@ class CreateDocumentsTable extends Migration {
 			$table->string('url');
 			$table->date('date');
 			$table->integer('sortnr');
-			$table->string('localfilename');
-			$table->string('author');
+			$table->string('localfilename')->nullable;
+			$table->string('author')->nullable;
 			$table->boolean('alwaysvisible');
 			$table->enum('type', array('document','wetgeving','transfusie','links','navorming'));
 			$table->timestamps();

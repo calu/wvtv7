@@ -19,9 +19,9 @@ class DocumentsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($rubriek, $titel)
 	{
-		return View::make('documents.create');
+		return View::make('documents.create', array('rubriek' => $rubriek, 'title' => $titel));
 	}
 
 	/**
@@ -102,6 +102,31 @@ class DocumentsController extends \BaseController {
 		Document::destroy($id);
 
 		return Redirect::route('documents.index');
+	}
+	
+	/*
+	 * Toon de documenten in deze rubriek.
+	 * 
+	 * De weergave varieert van rubriek tot rubriek.
+	 * En varieert ook voor gewone gebruiker en secretaris of admin
+	 * 
+	 * Bij Navorming, transfusie, documentatie : orden per titel - en verder (omschrijving, datum, auteur, link)
+	 * Bij links, overheidspublicaties : titel, datum, auteur
+	 * 
+	 */
+	public function documentlijst($rubriek, $titel)
+	{
+		// Haal de volledige lijst op voor deze rubriek - geordend volgens sortnr !!!!!
+		if (isset($titel) && sizeof($titel) > 0)
+		{
+			$lijst = Document::whereRaw('type = ? and title = ?', array($rubriek,$titel))->orderBy('sortnr')->get();
+//			$lijst = Document::whereRaw('type = ? and title = ?', array($rubriek,$titel))->orderBy('sortnr')->paginate(15);
+			
+		} else 
+		{
+			$lijst = Document::where('type', $rubriek)->orderBy('sortnr')->get();
+		}		
+		return View::make('documents.lijst')->with('lijst', $lijst)->with('titel', $titel)->with('rubriek', $rubriek);
 	}
 
 }

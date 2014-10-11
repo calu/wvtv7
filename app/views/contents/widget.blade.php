@@ -21,7 +21,8 @@ $lijst = AppHelper::getShortlist($rubriek);
 				<li>Nog geen data</li>
 			@else
 			   @foreach($lijst AS $item)
-			   		<li> {{ $item }} </li>
+			   		<?php $url = url('documentlijst', $parameters = array('rubriek' => $rubriek, 'title' => $item)) ?>
+			   		<li><a href= "{{ $url }}"> {{ $item }} </a></li>
 			   @endforeach	
 			@endif
 		@endif

@@ -54,12 +54,10 @@ li.menu{
 }
 
 .grijstitel{
-	background-color : gray;
-	color : white;
+	color : red;
 	text-align : center;
 	width : 100%;
-	margin-top : 5px;
-	margin-bottom : 5px;
+	
 }
 
 /**** Form correcties ****/
@@ -72,32 +70,28 @@ li.menu{
 }
 
 /*** aan/uit schakelaar ***/
-.onoffswitch{
-	position : relative;
-	width : 90px;
-	float : left;	
-	-webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-	
+.onoffswitch {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
 
-.onoffswitch-checkbox{ display: none; }
+.onoffswitch-checkbox {
+    display: none;
+}
 
-.onoffswitch-label{
-	display : block;
-	overflow : hidden;
-	cursor : pointer;
-	border : 2px solid #999999;
-	border-radius : 20px;
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
 }
 
 .onoffswitch-inner {
     display: block; width: 200%; margin-left: -100%;
     -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
-    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s; 
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
 }
 
 .onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 25px;
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
     font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
     -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
@@ -116,10 +110,10 @@ li.menu{
 }
 
 .onoffswitch-switch {
-    display: block; width: 18px; margin: 5px; 
+    display: block; width: 18px; margin: 6px;
     background: #FFFFFF;
     border: 2px solid #999999; border-radius: 20px;
-    position: absolute; top: 0; bottom: 3px; right: 56px;
+    position: absolute; top: 0; bottom: 0; right: 56px;
     -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
     -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
 }
@@ -132,8 +126,7 @@ li.menu{
     right: 0px; 
 }
 
-
-/ *** aan/uit schakelaar ***/
+/*** aan/uit schakelaar ***/
     /* this is the style of an unchecked "button" */
     .input-check{
         display:inline-block;
@@ -216,3 +209,13 @@ li.menu{
 }
 
 /**** EINDE : layout profiel edit pagina ******/
+
+/* weergave van de documenten */
+.rubriektitel{
+	width : 100%;
+	text-align : center;
+	color : white;
+	background-color : red;
+	font-size : 1.5em;
+	font-style : italic;
+}

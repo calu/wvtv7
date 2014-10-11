@@ -96,7 +96,7 @@ class BeheersController extends \BaseController {
 	 	// Hou er rekening mee dat het wachtwoord opnieuw gegenereerd wordt (wvtvtest) 
 	 	// en je moet de eerste (calu) niet meer overzetten.  LET WEL : de nummering verandert, 
 	 	// omdat we reeds 3 accounts hebben aangemaakt.
-	 	
+ 	/*
 	 	$date = new DateTime;
 		$extraID = DB::table('user_extras')->insertGetID(
 			array(
@@ -227,8 +227,103 @@ class BeheersController extends \BaseController {
 			}
 				
 		}
-		
+	
+	*/
 		print("<br />TODO - toevoegen van documenten");
+		$documenten = DB::select('SELECT * FROM wvtv_documenten');
+		foreach($documenten AS $document)
+		{
+			$docok = DB::table('documents')->insertGetID(
+				array(
+					'title' => $document->title,
+					'description' => $document->description,
+					'url' => $document->url,
+					'date' => $document->date,
+					'sortnr' => $document->sortnr,
+					'localfilename' => $document->localfilename,
+					'author' => $document->author,
+					'alwaysvisible' => $document->alwaysvisible,
+					'type' => 'document'
+				)
+			);
+			
+		}
+	    print('<br />Alle documenten overgeplaatst');
+	 
+		$links = DB::select('SELECT * FROM wvtv_links');
+		foreach($links AS $link)
+		{
+			$linkok = DB::table('documents')->insertGetID(
+				array(
+					'title' => $link->title,
+					'description' => $link->description,
+					'url' => $link->url,
+					'sortnr' => $link->sortnr,
+					'localfilename' => $link->localfilename,
+					'author' => $link->author,
+					'alwaysvisible' => $link->alwaysvisible,
+					'type' => 'links'
+				)
+			);
+		}
+	    print('<br />Alle links overgeplaatst.');
+	 	
+	 	$navormingen = DB::select('SELECT * FROM wvtv_navorming');
+		foreach($navormingen AS $navorming)
+		{
+			$linkok = DB::table('documents')->insertGetID(
+				array(
+					'title' => $navorming->title,
+					'description' => $navorming->description,
+					'url' => $navorming->url,
+					'sortnr' => $navorming->sortnr,
+					'localfilename' => $navorming->localfilename,
+					'author' => $navorming->author,
+					'alwaysvisible' => $navorming->alwaysvisible,
+					'type' => 'navorming'
+				)
+			);
+		}
+        print('<br />Alle navormingen overgeplaatst');
+		
+		
+		$transfusies = DB::select('SELECT * FROM wvtv_transfusie');
+		foreach($transfusies AS $transfusie)
+		{
+			$transfusieok = DB::table('documents')->insertGetID(
+				array(
+					'title' => $transfusie->title,
+					'description' => $transfusie->description,
+					'url' => $transfusie->url,
+					'sortnr' => $transfusie->sortnr,
+					'localfilename' => $transfusie->localfilename,
+					'author' => $transfusie->author,
+					'alwaysvisible' => $transfusie->alwaysvisible,
+					'type' => 'transfusie'
+				)
+			);			
+		}
+		print("<br />Alle transfusies overgeplaatst");
+	
+
+		$wetgeving = DB::select('SELECT * FROM wvtv_wetgeving');
+		foreach($wetgeving AS $wet)
+		{
+			$wetgevingok = DB::table('documents')->insertGetID(
+				array(
+					'title' => $wet->title,
+					'description' => $wet->description,
+					'url' => $wet->url,
+					'sortnr' => $wet->sortnr,
+					'localfilename' => $wet->localfilename,
+					'author' => null,
+					'alwaysvisible' => $wet->alwaysvisible,
+					'type' => 'wetgeving'
+				)
+			);			
+		}
+		print("<br />Alle wetgeving overgeplaatst");
+			 			
 	 	print( "<br />[BeheersController/init - TODO ]") ;
 	 }
  

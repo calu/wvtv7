@@ -29,6 +29,13 @@ class AppHelper {
 			case 'profiel' :
 				$ret = null;
 				break;
+			case 'navorming' :
+				$tabel = DB::select("SELECT DISTINCT(title) FROM Documents WHERE type='navorming' ORDER BY sortnr");
+				for ($i = 0; $i < 4; $i++)
+				{
+					$ret[] = $tabel[$i]->title;
+				}
+				break;
 			default :
 				print("<br /> deze rubriek {$rubriek} is nog niet geïmplementeerd");
 				die(" ##### tot hier");
@@ -84,6 +91,9 @@ class AppHelper {
 		switch ($rubriek)
 		{
 			case "bestuur" : $ret = 'bestuurs'; break;
+			case "navorming" :
+				$ret = 'navorming';
+				break;
 			default : die("AppHelper::getRubriekpointer : {rubriek } nog niet geïmplementeerd");
 		}
 		return $ret;
