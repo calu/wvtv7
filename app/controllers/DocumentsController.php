@@ -31,6 +31,9 @@ class DocumentsController extends \BaseController {
 	 */
 	public function store()
 	{
+//		var_dump(Input::all());
+//		die("DocumentsController@store");
+		$rubriek = Input::get('type');
 		$validator = Validator::make($data = Input::all(), Document::$rules);
 
 		if ($validator->fails())
@@ -39,8 +42,10 @@ class DocumentsController extends \BaseController {
 		}
 
 		Document::create($data);
+		
+		return View::make('contents/volledigelijst')->with('rubriek', $rubriek);
 
-		return Redirect::route('documents.index');
+//		return Redirect::route("volledigelijst/{$rubriek}");
 	}
 
 	/**

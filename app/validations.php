@@ -7,6 +7,23 @@ class CustomValidator extends Illuminate\Validation\Validator {
 		return $value != 0;
 	}
 	
+	public function validateUrlorfile($attribute, $value, $parameters)
+	{
+		return false;
+		$url = $this->data['url'];
+		die("url = #{$url}#");
+		if (isset($url) && strlen($url) > 0) return true;
+		
+		$local = $this->data['localfilename'];
+		if (isset($local) && strlen($url) > 0) return true;
+		return false;		
+	}
+	
+	public function validateTest($attribute, $value, $parameters)
+	{
+		die("tot hier[validations@validateTest]");
+	}
+	
 
 }
 

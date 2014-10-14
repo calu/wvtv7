@@ -96,7 +96,7 @@ class BeheersController extends \BaseController {
 	 	// Hou er rekening mee dat het wachtwoord opnieuw gegenereerd wordt (wvtvtest) 
 	 	// en je moet de eerste (calu) niet meer overzetten.  LET WEL : de nummering verandert, 
 	 	// omdat we reeds 3 accounts hebben aangemaakt.
- 	/*
+	 	
 	 	$date = new DateTime;
 		$extraID = DB::table('user_extras')->insertGetID(
 			array(
@@ -228,7 +228,7 @@ class BeheersController extends \BaseController {
 				
 		}
 	
-	*/
+
 		print("<br />TODO - toevoegen van documenten");
 		$documenten = DB::select('SELECT * FROM wvtv_documenten');
 		foreach($documenten AS $document)

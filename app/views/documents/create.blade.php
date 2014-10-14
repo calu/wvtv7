@@ -36,7 +36,7 @@
 			<div class="form-group {{ ($errors->has('title')) ? 'has-error' : '' }}" for="title">
 				{{ Form::label('create_title', trans('documents.title'), array('class' => 'col-sm-2 control-label')) }}
 				<div class='col-sm-8'>
-					{{ Form::text('title', '', array('class' => 'form-control', 'placeholder' => $title, 'id' => 'documents_title')) }}
+					{{ Form::text('title', $title, array('class' => 'form-control', 'placeholder' => trans('documents.title'), 'id' => 'documents_title')) }}
 				</div>
 				{{ ($errors->has('title') ? 'Geef een titel' : '') }}
 			</div>
@@ -74,6 +74,7 @@
 					<div class='col-sm-8'>
 						{{ Form::text('url', '', array('class' => 'form-control', 'placeholder' => trans('documents.url'), 'id' => 'documents_url')) }}
 					</div>
+					{{ ($errors->has('url') ? 'de url is niet valide' : '') }}
 				</div>		
 				<div>of</div>
 				<div class="form-group {{ ($errors->has('localfilename')) ? 'has-error' : '' }}" for="localfilename">
@@ -85,13 +86,17 @@
 				</div>						
 			</div>
 			{{-- zichtbaar voor iedereen --}}
-			<div class="form-group {{ ($errors->has('zichtbaar voor iedereen ? ')) ? 'has-error' : '' }}" for="zichtbaar voor iedereen ? ">
-				{{ Form::label('create_zichtbaar voor iedereen ? ', trans('documents.zichtbaar voor iedereen ? '), array('class' => 'col-sm-2 control-label')) }}
+			<div class="form-group {{ ($errors->has('alwaysvisible')) ? 'has-error' : '' }}" for="alwaysvisible">
+				{{ Form::label('create_alwaysvisible', trans('documents.zichtbaar voor iedereen ? '), array('class' => 'col-sm-2 control-label')) }}
 				<div class='col-sm-8'>
-					{{ Form::checkbox('zichtbaar voor iedereen ? ', '', array('class' => 'form-control', 'id' => 'documents_zichtbaar voor iedereen ? ')) }}
+					{{ Form::checkbox('alwaysvisible', '', array('class' => 'form-control', 'id' => 'documents_alwaysvisible')) }}
 				</div>
-				{{ ($errors->has('zichtbaar voor iedereen ? ') ? 'is het zichtbaar voor iedereen ?' : '') }}
-			</div>			
+				{{ ($errors->has('alwaysvisible') ? 'is het zichtbaar voor iedereen ?' : '') }}
+			</div>		
+			
+			
+			{{-- voeg nu ook nog het type toe --}}
+			{{ Form::hidden('type', $rubriek) }}	
 			{{-- knop maak --}}
 			<div class="form-group" for="xyz">				
 				<div class='col-sm-8'>

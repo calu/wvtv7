@@ -179,6 +179,7 @@ Route::get('documentlijst/{rubriek}/{titel}', array('as' => 'documentlijst', 'us
 
 Route::get('documents/create/{rubriek}/{titel}', array('as' => 'documents', 'uses' => 'DocumentsController@create'));
 
+
 /*
 Route::filter('csrf', function() {
     $token = Request::ajax() ? Request::header('X-CSRF-Token') : Input::get('_token');
