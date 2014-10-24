@@ -58,7 +58,15 @@
 				@foreach($lijst AS $item) 
 					<tr>
 						@if ($editor)
-							<td>up down</td>
+							<?php  
+							// Hier maak je de beide url's aan - en zorg ervoor dat ook de id en de rubriek meegegeven worden 
+							$urlup = url('arrow', $parameters = array('id' => $item['id'], 'rubriek' => $rubriek, 'direction' => 'up'));
+							$urldown = url('arrow', $parameters = array('id' => $item['id'], 'rubriek' => $rubriek, 'direction' => 'down'));
+							?>
+							<td class='mycol-70'>
+								<a href="{{ $urlup }}" rel="tooltip">{{HTML::image('img/up.png') }}</a>
+								<a href="{{ $urldown }}" rel="tooltip">{{HTML::image('img/down.png') }}</a>								
+							</td>
 						@endif
 						<td>{{ $item->description }}</td>
 						<td>{{ $item->date }}</td>

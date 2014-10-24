@@ -18,6 +18,15 @@
 		 if (!$editor){
 		 	die("sorry, hier mag je niet komen");
 		 }
+		 
+		// bereken het sortnr :
+		//   - hou rekening met type document (rubriek)
+		//   - hou rekening dat in één type document elk document volgnr uniek is
+		//   - hou rekening dat bij een titel alle volgnr elkaar opvolgen.
+		$sortnrRij = AppHelper::berekenVolgnr($rubriek, $title);
+		$sortnr = $sortnrRij['sortnr'];
+		$oudeindex = $sortnrRij['indexoude'];
+//		die("de oude sortnr = {$sortnr}");
 		?>
 		
 @section('content')
@@ -97,27 +106,14 @@
 			
 			{{-- voeg nu ook nog het type toe --}}
 			{{ Form::hidden('type', $rubriek) }}	
+			{{ Form::hidden('sortnr', $sortnr) }}
+			{{ Form::hidden('indexoude', $oudeindex) }}
 			{{-- knop maak --}}
 			<div class="form-group" for="xyz">				
 				<div class='col-sm-8'>
 					{{ Form::submit('Aanmaken', array('class' => 'btn btn-primary')) }}
 				</div>
-			</div>		
-		<?php /*
-			<div class="form-group {{ ($errors->has('xyz')) ? 'has-error' : '' }}" for="xyz">
-				{{ Form::label('create_xyz', trans('documents.xyz'), array('class' => 'col-sm-2 control-label')) }}
-				<div class='col-sm-8'>
-					{{ Form::submit('Aanmaken', array('class' => 'btn btn-primary')) }}
-				</div>
-				{{ ($errors->has('xyz') ? 'xyztekst' : '') }}
-			</div>
-		 * 
-		 * 
-             {{ Form::text('birthdate',$extra->birthdate, array('class' => 'mycol-200 datepicker', 'placeholder' => trans('pages.birthdate'),'data-datepicker' => 'datepicker', 'id' => 'edit_birthdate'))}}
- 
-		*/?>	
-		
-			
+			</div>					
 		{{ Form::close() }}
 		{{-- <div class='rubriektitel'>{{ $title }}</div> --}}
 		

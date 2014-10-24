@@ -41,11 +41,13 @@ class DocumentsController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
 
+		//TODO : hernummer alles met nieuw sortnr !!!!
+		$indexoude = Input::get('indexoude');
+		$sortnr = Input::get('sortnr');
+		AppHelper::herberekenSortnr($indexoude,$sortnr, $rubriek);
 		Document::create($data);
 		
 		return View::make('contents/volledigelijst')->with('rubriek', $rubriek);
-
-//		return Redirect::route("volledigelijst/{$rubriek}");
 	}
 
 	/**

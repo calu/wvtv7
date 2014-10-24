@@ -159,7 +159,9 @@ li.menu{
 .label-120,
 .mycol-70,
 .mycol-100,
+.mycol-120,
 .mycol-200,
+.mycol-250,
 .mycol-400,
 .mycol-600
 {
@@ -183,7 +185,9 @@ li.menu{
 	.label-120 { float : left; width : 120px;}
 	.mycol-70 { float : left; width : 70px;}
 	.mycol-100 { width : 100px; }
+	.mycol-120 { width : 120px; }
 	.mycol-200 { width : 200px; }
+	.mycol-250 { width : 250px; }
 	.mycol-400 { width : 400px; }
 	.mycol-600 { width : 600px; }
 }

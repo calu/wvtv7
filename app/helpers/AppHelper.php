@@ -50,21 +50,28 @@ class AppHelper {
 		{
 			case 'bestuur' :
 				$tabel = 'bestuurs';
+				$idtype = 'user_id';
+				break;
+			case 'navorming' :
+				$tabel = 'documents';
+				$idtype = 'id';
 				break;
 			default:
 				print("<br />deze rubriek {$rubriek} is nog niet geïmplementeerd in AppHelper::moveItem");
 				die(" ##### tot hier");
 		}
 		
-		$item = DB::table($tabel)->where('user_id', '=', $id)->get();
+		$item = DB::table($tabel)->where($idtype, '=', $id)->get();
+		var_dump($item); 
 		$sortnr = $item[0]->sortnr ;
 		if ($direction == 'up')
 		{
 			if ( $sortnr == 1) return;
+			die("<br />sortnr = {$sortnr} [AppHelper@moveItem]");
 			// Nu moeten we de vorige vinden 
 			$itemhoger = DB::table($tabel)->where('sortnr', '=', ($sortnr-1))->get();
 			// en verwissel sortnr met de huidige
-			DB::table($tabel)->where('user_id',$id)->update(array('sortnr' => $sortnr-1));
+			DB::table($tabel)->where($idtype,$id)->update(array('sortnr' => $sortnr-1));
 			DB::table($tabel)->where('id', $itemhoger[0]->id)->update(array('sortnr' => $sortnr));
 		}
 		
@@ -78,7 +85,7 @@ class AppHelper {
 			// Zoek volgend item met sortnr+1
 			$itemvolgend = DB::table($tabel)->where('sortnr', ($sortnr+1))->get();
 			// verwissel de sortnrs
-			DB::table($tabel)->where('user_id', $id)->update(array('sortnr' => $sortnr+1));
+			DB::table($tabel)->where($idtype, $id)->update(array('sortnr' => $sortnr+1));
 			DB::table($tabel)->where('id', $itemvolgend[0]->id)->update(array('sortnr' => $sortnr));
 
 		}
@@ -111,6 +118,72 @@ class AppHelper {
 			$enum = array_add($enum, $v, $v);
 		}
 		return $enum;
+	}
+	
+	/*
+	 * berekenVolgnr
+	 * 
+	 * @purpose : bereken het juiste sortnr voor een nieuwe fiche in de tabel
+	 * @return : een array met een sortnr ( of -1 als het niet kan berekend worden) en de index van de vorige
+	 * 
+	 * @remarks :
+	 *     Bij de berekening moet je enkel de sortnrs ophalen voor een welbepaalde rubriek
+	 *     waarbij je in gedachte houdt dat de items met zelfde titel een opeenvolgend sortnr hebben en 
+	 *     (dus moet je ook gaan hernummeren -- gebeurt na validatie !!!!! in DocumentsController)
+	 * 
+	 */
+	public static function berekenVolgnr($rubriek, $title)
+	{
+		// Haal alle items van deze rubriek
+		$result = DB::select("SELECT * FROM documents WHERE type = '{$rubriek}' ORDER BY sortnr ");
+		// Als er geen items zijn, dan is het sortnr = 1
+		if ($result == null || sizeof($result) == 0) return 1;  // Er zijn nog geen items
+		// Anders
+		//   Zoek het hoogste sortnr met deze title (navorming, transfusie, documentatie  van geen belang in links, overheidspublicaties)
+		$maxsortnr = -1; $maxindex = -1;
+		for ($index = 0; $index < sizeof($result); $index++)
+		{
+			$item = $result[$index];
+			if ($item->title == $title)
+			{
+				if ($item->sortnr > $maxsortnr)
+				{
+					$maxsortnr = $item->sortnr;
+					$maxindex = $index;
+				}
+			} 
+		}
+		//   geef het een waarde hoger
+		return array('sortnr' => $maxsortnr + 1, 'indexoude' => $maxindex);
+	}
+	
+	/*
+	 * herberekenSortnr
+	 * 
+	 * @purpose : een nieuw document werd toegevoegd en in berekenVolgnr (zie hierboven ) werd het sortnr berekend
+	 *            en nu moeten alle opeenvolgende fiches een nieuw sortnr krijgen
+	 * @args : 
+	 *   - indexoude is de index van het record voor het nieuwe record dat wordt toegevoegd
+	 *   - sortnr is het nummer dat de eerstvolgende moet krijgen
+	 *   - rubriek is de rubriek van het document
+	 * 
+	 * @return : true if success
+	 * 
+	 * @remarks : het zou hier kunnen mislopen omdat het toevoegen nog niet is gebeurd en we reeds hernummeren. 
+	 *            houd dat in het oog
+	 */
+	public static function herberekenSortnr($indexoude,$sortnr, $rubriek)
+	{
+		$result = DB::select("SELECT * FROM documents WHERE type = '{$rubriek}' ORDER BY sortnr ");
+		if ($result == null || sizeof($result) == 0) return true; // nog geen items, dus niet hernummeren
+		
+		for ($index = $indexoude+1; $index < sizeof($result); $index++)
+		{
+			$item = $result[$index];
+			$item->sortnr = $sortnr++;
+		}
+
+        return true;
 	}
 
 }
